@@ -1,5 +1,5 @@
 let url = 'http://localhost:3000/monsters'
-let currentPage = 1
+let currentPage = 19
 
 
 loadForm()
@@ -20,36 +20,45 @@ function fowardButton(e){
         // debugger
         x.forEach(monster => {
             // debugger
-          monster.innerText = "."
+          monster.innerText = " "
         })
         fetchMonsters()
 }
+let backward = document.getElementById('back')
 
-function backbutton(e){
+backward.addEventListener("click", backButton)
+
+function backButton(e){
     e.preventDefault()
-    
+    // debugger
     if (currentPage == 1){
         alert("There are no Monstrs here")
     }
     else{
         
-        currentPage++
+        currentPage--
         let monsterContainer = document.getElementById('monster-container')
         // monsterContainer.innerText = " "
         let x = monsterContainer.querySelectorAll('div')
         // debugger
         x.forEach(monster => {
-          monster.innerText = "."
+          monster.innerText = " "
         })
         fetchMonsters()
     }
 }
+
+
+
 
 // function newMonsters(){
 //     let x = monsterContainer.querySelectorAll('div')
 //     x.forEach
 //     fetch 
 // }
+
+
+
 
 
 function loadForm(){
@@ -88,8 +97,8 @@ function handleForm(e){
      },
     body: JSON.stringify(data)
 })
-// .then(res => res.json())
-// .then(showMonsters)
+.then(res => res.json())
+.then(showMonsters)
 }
 
 
@@ -115,6 +124,7 @@ function showMonsters(res){
 }
 
 function fetchMonsters(){
+    let monsterContainer = document.getElementById('monster-container')
     fetch(`${url}?_limit=50&_page=${currentPage}`)
     .then(res => res.json())
     .then(res =>{
