@@ -6017,6 +6017,12 @@
       "age": "80",
       "description": "9-foot-tall bear-like turquoise-furred male ogre with horns, purple spots, razor-sharp claws on his hands",
       "id": 1003
+    },
+    {
+      "name": "Mike Wazowski",
+      "age": "29",
+      "description": "He is a lime green spherical monster with one large green eye, two small horns on his head, and thin arms and legs attached to either side of his torso.",
+      "id": 1004
     }
   ]
 }

@@ -3,21 +3,26 @@ document.addEventListener("DOMContentLoaded", ()=>{
     getMonsters()
     createForm()
     document.querySelector("#monster-form").addEventListener("submit", createNewMonster)
-
+    document.querySelector("#forward").addEventListener("click", pageForward)
+    document.querySelector("#back").addEventListener("click", pageBack)
 })
 
+let pageCounter = 0
+
+function monsterUrl(){
+    return 'http://localhost:3000/monsters?_limit=50&_page='
+}
+
 function getMonsters() {
-    fetch("http://localhost:3000/monsters?_limit=50&_page=1")
+    fetch(monsterUrl() + ++pageCounter)
     .then(resp => resp.json())
     .then(monsters => monsters.forEach(addMonsterToDOM))
 }
 
-// function monsterUrl() {
-//     return `http://localhost:3000/monster?_limit=50&page=${pageNum}`
-// }
 
 function addMonsterToDOM(monster){
     const monsterDiv = document.createElement('div')
+    monsterDiv.id = "monsters"
     const monsterH2 = document.createElement('h2')
     const monsterH4 = document.createElement('h4')
     const monsterP = document.createElement('p')
@@ -86,5 +91,29 @@ function postNewMonster(monsterData) {
     .then(res => res.json())
     .then(addMonsterToDOM)
     .catch(()=>alert('Server down! Please add your monster later <3'))
+}
+
+function pageForward(event) {
+    let elem = document.querySelector("#monster-container")
+    let child = elem.lastElementChild;
+    console.log(child)
+    while (child) {
+        elem.removeChild(child);
+        child = elem.lastElementChild;
+    }
+    getMonsters()
+}
+
+function pageBack() {
+    let elem = document.querySelector("#monster-container")
+    let child = elem.lastElementChild;
+    console.log(child)
+    while (child) {
+        elem.removeChild(child);
+        child = elem.lastElementChild;
+    }
+    fetch(monsterUrl() + --pageCounter)
+    .then(resp => resp.json())
+    .then(monsters => monsters.forEach(addMonsterToDOM))
 }
 
