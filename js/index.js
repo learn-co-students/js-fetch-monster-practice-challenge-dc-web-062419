@@ -93,27 +93,31 @@ function postNewMonster(monsterData) {
     .catch(()=>alert('Server down! Please add your monster later <3'))
 }
 
+
 function pageForward(event) {
     let elem = document.querySelector("#monster-container")
     let child = elem.lastElementChild;
-    console.log(child)
+   
+    // clears page
     while (child) {
         elem.removeChild(child);
         child = elem.lastElementChild;
     }
+   
     getMonsters()
 }
 
 function pageBack() {
     let elem = document.querySelector("#monster-container")
     let child = elem.lastElementChild;
-    console.log(child)
+    
+    // clears page
     while (child) {
         elem.removeChild(child);
         child = elem.lastElementChild;
     }
+
     fetch(monsterUrl() + --pageCounter)
     .then(resp => resp.json())
     .then(monsters => monsters.forEach(addMonsterToDOM))
 }
-
