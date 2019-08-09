@@ -6011,6 +6011,12 @@
       "age": null,
       "description": "",
       "id": 1002
+    },
+    {
+      "name": "James P Sullivan",
+      "age": "80",
+      "description": "9-foot-tall bear-like turquoise-furred male ogre with horns, purple spots, razor-sharp claws on his hands",
+      "id": 1003
     }
   ]
 }
