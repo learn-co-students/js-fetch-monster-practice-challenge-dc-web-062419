@@ -15,7 +15,11 @@ document.addEventListener('DOMContentLoaded', function(event){
         postMonster(monsterObj)
 
     })
-    
+    let forwwardButton = document.getElementById('forward')
+        forwwardButton.dataset.id = 0
+    let backButton = document.getElementById('back')
+        backButton.dataset.id = 0
+    indexMonsters()
 
 
 })
@@ -90,4 +94,46 @@ function postMonster(monster){
     
 }
 
+// function cycleMonsters(e){
+//     if(e.target.id === "forward"){
+//         let count = e.target.dataset.id = parseInt(e.target.dataset.id) + 1
+//         for(let i = count, )
+        
+//     }else {
+//         let count = e.target.nextElementSibling.dataset.id = parseInt(e.target.nextElementSibling.dataset.id) - 1
+//     }
+    
+    
+
+// }
+
+function indexMonsters(){
+    fetch(MONSTERS_URL)
+        .then(res => res.json())
+        .then(monsters => {
+            let obj = []
+            let x = 0
+            let y = 50 
+            const rec = recursion(x, y, obj, monsters)
+            let final = {}
+            for (let i = 0; i < rec.length; i++){
+                final[`${i}`] = rec[i]
+            } //Now i need to conditionally render the pages
+            
+            
+        })
+}
+
+function recursion(x, y, obj, monsters){
+    section = monsters.slice(x, y)
+    obj.push(section)
+    if(section.length === 0){
+        return obj
+    }
+    x = x + 50
+    y = y + 50 
+    return recursion(x, y, obj, monsters)
+    
+
+}
 
