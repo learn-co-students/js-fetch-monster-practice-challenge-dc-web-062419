@@ -1,9 +1,11 @@
 MONSTERS_URL = "http://localhost:3000/monsters"
 const monsterContainer = document.getElementById('monster-container')
 const newMonsterDiv = document.getElementById('create-monster')
+
 document.addEventListener('DOMContentLoaded', function(event){
     getMonsters(event)
     monsterForm(event)
+    
     let form = document.getElementById('monster-form')
     form.addEventListener('submit', function(e){
         e.preventDefault()
@@ -15,11 +17,14 @@ document.addEventListener('DOMContentLoaded', function(event){
         postMonster(monsterObj)
 
     })
-    let forwwardButton = document.getElementById('forward')
-        forwwardButton.dataset.id = 0
-    let backButton = document.getElementById('back')
-        backButton.dataset.id = 0
-    indexMonsters()
+    
+    // debugger
+    indexMonsters() 
+    // let forwwardButton = document.getElementById('forward')
+    //     forwwardButton.dataset.id = 0
+    //     forwwardButton.addEventListener('click', (e) => filterPage(indexMonsters()))
+    // let backButton = document.getElementById('back')
+    //     backButton.dataset.id = 0
 
 
 })
@@ -36,6 +41,7 @@ function getMonsters(event){
 }
 
 function renderMonsters(monsterObj){
+    
     let monsterDiv = document.createElement('div')
         monsterDiv.dataset.id = monsterObj.id
         monsterDiv.id = `monster-${monsterObj.id}`
@@ -45,12 +51,18 @@ function renderMonsters(monsterObj){
         hAge.innerText = monsterObj.age
     let descrip = document.createElement('p')
         descrip.innerText = monsterObj.description
+    let monsterEdit = document.createElement('button')
+        monsterEdit.innerText = "Edit this Monster"
+        monsterEdit.dataset.id = monsterObj.id
+        monsterEdit.addEventListener('click', (e) => showMonster(e))
 
     monsterDiv.appendChild(hName)
     monsterDiv.appendChild(hAge)
     monsterDiv.appendChild(descrip)
+    monsterDiv.appendChild(monsterEdit)
 
     monsterContainer.appendChild(monsterDiv)    
+    
 }
 
 function monsterForm(event){
@@ -94,21 +106,35 @@ function postMonster(monster){
     
 }
 
-// function cycleMonsters(e){
-//     if(e.target.id === "forward"){
-//         let count = e.target.dataset.id = parseInt(e.target.dataset.id) + 1
-//         for(let i = count, )
-        
-//     }else {
-//         let count = e.target.nextElementSibling.dataset.id = parseInt(e.target.nextElementSibling.dataset.id) - 1
-//     }
-    
-    
+function filterPage(obj){
+    let forwardButton = document.getElementById('forward')
+        forwardButton.dataset.id = 0
+        forwardButton.addEventListener('click', (e) => render(e, obj))
 
-// }
+    let backButton = document.getElementById('back')
+        backButton.dataset.id = 0
+        backButton.addEventListener('click', (e) => render(e, obj))
+    
+}
+    
+function render(e, obj){
+    if(e.target.id === "forward"){
+        let count = e.target.dataset.id = parseInt(e.target.dataset.id) + 1
+        monsterContainer.innerHTML = ""
+        obj[count].forEach(renderMonsters)
+        
+        
+        
+    } else {
+        let count = e.target.nextElementSibling.dataset.id = parseInt(e.target.nextElementSibling.dataset.id) - 1
+        monsterContainer.innerHTML = ""
+        obj[count].forEach(renderMonsters)
+    }
+
+}
 
 function indexMonsters(){
-    fetch(MONSTERS_URL)
+    return fetch(MONSTERS_URL)
         .then(res => res.json())
         .then(monsters => {
             let obj = []
@@ -118,10 +144,16 @@ function indexMonsters(){
             let final = {}
             for (let i = 0; i < rec.length; i++){
                 final[`${i}`] = rec[i]
-            } //Now i need to conditionally render the pages
+                
+            } 
+            
+            filterPage(final)
+            
             
             
         })
+        
+        
 }
 
 function recursion(x, y, obj, monsters){
@@ -137,3 +169,6 @@ function recursion(x, y, obj, monsters){
 
 }
 
+function showMonster(e){
+    debugger
+}
