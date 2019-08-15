@@ -1,9 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const monsterForm = document.getElementById("add-monster-form")
+
   const monsterContainer = document.getElementById("monster-container")
+  const createMonsterDiv = document.getElementById("create-monster")
+  const monsterForm = document.createElement("form")
+  monsterForm.id = "add-monster-form"
+  createMonsterDiv.appendChild(monsterForm)
+
+  const nameField = document.createElement("input")
+  nameField.id = "name"
+  nameField.placeholder = "name..."
+  const ageField = document.createElement("input")
+  ageField.id = "age"
+  ageField.placeholder = "age..."
+  const descriptionField = document.createElement("input")
+  descriptionField.id = "description"
+  descriptionField.placeholder = "description..."
+  const submitBttn = document.createElement("button")
+  submitBttn.innerText = "Create"
+  monsterForm.appendChild(nameField)
+  monsterForm.appendChild(ageField)
+  monsterForm.appendChild(descriptionField)
+  monsterForm.appendChild(submitBttn)
+
   const leftArrow = document.getElementById("back")
   const rightArrow = document.getElementById("forward")
-  let numMonsters = 0
+  let numMonsters
   let start = 0
   let end = 50
 
@@ -15,19 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function grabFifty(monstersArray){
     numMonsters = monstersArray.length
-    console.log(numMonsters)
     monsterContainer.innerHTML = "<div></div>"
     monstersArray.slice(start,end).forEach(renderMonster)
   }
 
   function renderMonster(monster){
-    const monsterDiv = document.getElementById("monster-container")
     const monsterName = document.createElement("h2")
     const monsterAge = document.createElement("h4")
     const monsterDescription = document.createElement("p")
-    monsterDiv.appendChild(monsterName)
-    monsterDiv.appendChild(monsterAge)
-    monsterDiv.appendChild(monsterDescription)
+    monsterContainer.appendChild(monsterName)
+    monsterContainer.appendChild(monsterAge)
+    monsterContainer.appendChild(monsterDescription)
     monsterName.innerText = monster.name
     monsterAge.innerText = monster.age
     monsterDescription.innerText = monster.description
